@@ -1,0 +1,59 @@
+
+package filesdemostrations;
+
+import java.io.File;
+import javax.swing.JOptionPane;
+
+/**
+ * A classe File utilizada para obter informações de arquivo e de diretório.
+ * Exemplo modificado para utilizar JOptionPane para interação com o usuário.
+ */
+public class FilesDemostrations {
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        // Solicita ao usuário o nome do arquivo ou diretório
+        String path = JOptionPane.showInputDialog("Enter file or directory name:");
+        
+        // Analyza o caminho fornecido
+        analyzePath(path);
+    } // fim de main
+
+    // Exibe informações sobre o arquivo que o usuário especifica
+    public static void analyzePath(String path) {
+        // Cria o objeto File com base na entrada do usuário
+        File file = new File(path);
+
+        // Prepara a mensagem a ser exibida
+        StringBuilder message = new StringBuilder();
+        
+        if (file.exists()) {
+            // Adiciona informações sobre o arquivo (ou diretório)
+            message.append(file.getName()).append(" exists\n")
+                   .append(file.isFile() ? "is a file\n" : "is not a file\n")
+                   .append(file.isDirectory() ? "is a directory\n" : "is not a directory\n")
+                   .append(file.isAbsolute() ? "is absolute path\n" : "is not absolute path\n")
+                   .append("Last modified: ").append(file.lastModified()).append("\n")
+                   .append("Length: ").append(file.length()).append("\n")
+                   .append("Path: ").append(file.getPath()).append("\n")
+                   .append("Absolute path: ").append(file.getAbsolutePath()).append("\n")
+                   .append("Parent: ").append(file.getParent()).append("\n");
+
+            if (file.isDirectory()) {
+                // Listagem de diretório
+                String[] directory = file.list();
+                message.append("\nDirectory contents:\n");
+                for (String directoryName : directory) {
+                    message.append(directoryName).append("\n");
+                }
+            }
+        } else {
+            // Mensagem de erro se o arquivo ou diretório não existir
+            message.append(path).append(" does not exist.");
+        }
+        
+        // Exibe a mensagem em uma caixa de diálogo
+        JOptionPane.showMessageDialog(null, message.toString());
+    } // fim do método analyzePath
+} // fim da classe FilesDemostrations
